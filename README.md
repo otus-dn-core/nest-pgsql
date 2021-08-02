@@ -9,8 +9,10 @@ require('module-alias/register')   !!! <- in manual
  ... in main.ts 
 
  "start:dev", "start:debug" - delete from package.json;
+ For web-dev install nodemon ( https://www.npmjs.com/package/nodemon )
  in "start" run nodemon with config /nodemon.json
+ in nodemon.json start "IS_TS_NODE=true ts-node -r tsconfig-paths/register src/main.ts"
 
  _____________________________________________________________
 
- For web-dev install nodemon ( https://www.npmjs.com/package/nodemon )
+ 
