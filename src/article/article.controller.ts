@@ -5,6 +5,7 @@ import { Body, UseGuards } from "@nestjs/common";
 import { Controller, Post } from "@nestjs/common";
 import { ArticleService } from "./article.service";
 import { CreateArticleDto } from './dto/createArticle.dto';
+import { ArticleResponseInterface } from './types/articleResponse.interface';
 
 @Controller('articles')
 export class ArticleController {
@@ -14,10 +15,11 @@ export class ArticleController {
     async create(
         @User() currentUser: UserEntity, 
         @Body('article') createArticleDto: CreateArticleDto,
-    ): Promise<any> {
-        return this.articleService.createArticle(
+    ): Promise<ArticleResponseInterface> {
+        const article = await this.articleService.createArticle(
             currentUser, 
             createArticleDto,
         );
+        return this.articleService.buildArticleResponse(article);
     } 
 }
