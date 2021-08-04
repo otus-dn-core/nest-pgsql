@@ -9,6 +9,7 @@ import { UserResponseInterface} from './types/userResponse.interface'
 import { HttpException } from "@nestjs/common";
 import { LoginUserDto } from "./dto/loginUser.dto";
 import { compare } from 'bcrypt';
+import { UpdateUserDto } from "./dto/updateUser.dto";
 
 @Injectable()
 export class UserService {
@@ -67,6 +68,16 @@ export class UserService {
     findById(id: number): Promise<UserEntity> {
       return this.userRepository.findOne(id);
     }  
+
+
+    async updateUser(
+      userId: number,
+      updateUserDto: UpdateUserDto,
+      ): Promise<UserEntity> {
+        const user = await this.findById(userId);
+        Object.assign(user, updateUserDto);
+        return await this.userRepository.save(user);
+    }
 
 
     generateJwt(user: UserEntity): string {
